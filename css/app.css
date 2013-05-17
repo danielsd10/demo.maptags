@@ -8,3 +8,7 @@ html, body {
 	height: 100%;
 	width: 100%;
 }
+/* fix: para los botones de zoom de google maps no se reduzcan de tamaño */
+#gmap img {
+	max-width: none;
+}

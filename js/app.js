@@ -1,4 +1,7 @@
 
+// Activar la mejora visual
+google.maps.visualRefresh = true;
+
 $(document).ready(function(){
 
 	$("#gmap").gmap({
