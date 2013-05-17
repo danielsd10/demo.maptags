@@ -26,8 +26,26 @@
 	</head>
 
 	<body>
-		<div id="gmap">
-
+		<div id="gmap"></div>
+		<div id="toolbar" class="btn-group">
+			<button id="addLocation" class="btn btn-danger" title="Lugar"><i class="icon-white icon-map-marker"></i></button>
+			<button id="addPicture" class="btn btn-success" title="Imagen"><i class="icon-white icon-picture"></i></button>
+			<button id="addGift" class="btn btn-warning" title="Regalo"><i class="icon-white icon-gift"></i></button>
+			<button id="addMeeting" class="btn btn-info" title="Reunión"><i class="icon-white icon-user"></i></button>
+			<button id="addDangerZone" class="btn btn-inverse" title="Zona de Peligro"><i class="icon-white icon-warning-sign"></i></button>
+		</div>
+		<div id="dialog" class="modal hide fade">
+			<div class="modal-header">
+    			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    			<h3>Nuevo Marcador</h3>
+  			</div>
+  			<div class="modal-body">
+    			<p>Formulario...</p>
+  			</div>
+  			<div class="modal-footer">
+    			<a href="javascript:void(0);" class="btn" data-dismiss="modal">Cerrar</a>
+    			<a href="javascript:void(0);" class="btn btn-primary">Guardar</a>
+  			</div>
 		</div>
 	</body>
 </html>

@@ -12,3 +12,10 @@ html, body {
 #gmap img {
 	max-width: none;
 }
+
+#toolbar {
+	position: absolute;
+	left: 90px;
+	top: 20px;
+	z-index: 99;
+}
