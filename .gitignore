@@ -1,0 +1,15 @@
+# archivos de sistema y temporales
+~*
+*.tmp
+Thumbs.db
+Desktop.ini
+
+# logs
+php_error.log
+error_log
+*.log
+
+# archivos de zend/eclipse
+/.settings
+.buildpath
+.project
