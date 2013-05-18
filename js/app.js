@@ -27,14 +27,19 @@ $(document).ready(function(){
 	$("#addMeeting").click(addMeeting_Click);
 	$("#addDangerZone").click(addDangerZone_Click);
 
+	// eventos modal
+	$("#dialog").on('hidden', function(){
+		$(this).find("input, textarea").val("");
+	});
+
 });
 
 // objeto que permite controlar el mapa
 var Map = {
-	obj: $("#gmap"),
+	//obj: $("#gmap"),
 	state: MAP_MODE_NAV,
 	MarkerBegin: function() {
-		console.log($(Map.obj));
+		//console.log($(Map.obj));
 		$("#gmap").gmap('option', 'draggableCursor', 'crosshair');
 		Map.state = MAP_MODE_EDIT;
 	},
@@ -55,22 +60,33 @@ var Map = {
 
 addLocation_Click = function() {
 	Map.MarkerBegin();
+	$('#dialog fieldset').hide();
+	$('#dialog fieldset.all').show();
+	$('#dialog').modal();
 };
 
 addPicture_Click = function() {
+	$('#dialog fieldset').hide();
+	$('#dialog fieldset.all, #dialog fieldset.picture').show();
 	$('#dialog').modal();
 };
 
 addGift_Click = function() {
-
+	$('#dialog fieldset').hide();
+	$('#dialog fieldset.all, #dialog fieldset.gift').show();
+	$('#dialog').modal();
 };
 
 addMeeting_Click = function() {
-
+	$('#dialog fieldset').hide();
+	$('#dialog fieldset.all, #dialog fieldset.meeting').show();
+	$('#dialog').modal();
 };
 
 addDangerZone_Click = function() {
-
+	$('#dialog fieldset').hide();
+	$('#dialog fieldset.all').show();
+	$('#dialog').modal();
 };
 
 map_SetMarkerBegin = function() {
