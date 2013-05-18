@@ -58,23 +58,23 @@
 					</fieldset>
 					<fieldset class="meeting">
 						<label for="fecha">Fecha</label>
-						<input id="fecha" type="text" class="input-medium" placeholder="2013-01-31">
+						<input id="fecha" type="text" class="input-medium" placeholder="2013-01-31 00:00">
 						<label for="asist">Asistentes</label>
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-user"></i></span>
-							<input id="asist" type="text" placeholder="nombre">
+							<input id="asist0" name="asist" type="text" placeholder="nombre">
 						</div>
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-user"></i></span>
-							<input id="asist" type="text" placeholder="nombre">
+							<input id="asist1" name="asist" type="text" placeholder="nombre">
 						</div>
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-user"></i></span>
-							<input id="asist" type="text" placeholder="nombre">
+							<input id="asist2" name="asist" type="text" placeholder="nombre">
 						</div>
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-user"></i></span>
-							<input id="asist" type="text" placeholder="nombre">
+							<input id="asist3" name="asist" type="text" placeholder="nombre">
 						</div>
 					</fieldset>
 					<fieldset class="all">
@@ -84,8 +84,8 @@
 				</form>
   			</div>
   			<div class="modal-footer">
-    			<a href="javascript:void(0);" class="btn" data-dismiss="modal">Cerrar</a>
-    			<a href="javascript:void(0);" class="btn btn-primary">Guardar</a>
+    			<button class="btn" data-dismiss="modal">Cerrar</a>
+    			<button class="btn btn-primary" data-action="save">Guardar</a>
   			</div>
 		</div>
 	</body>

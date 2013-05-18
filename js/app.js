@@ -12,11 +12,11 @@ $(document).ready(function(){
 	// iniciar mapa
 	$("#gmap").gmap({
 		'center': startLatLng,
-		'zoom': 15
+		'zoom': 15,
+		'mapTypeId': google.maps.MapTypeId.ROADMAP
 	}).bind('init', function(event, map) {
 		// carga de marcas
-		$.post('backend/load.php', null, function(data){
-			console.log(data);
+		$.get('backend/load.php', null, function(data){
 			for(i=0; i < data.length; i++) {
 				Map.DrawMarker( data[i] );
 			}
@@ -25,7 +25,7 @@ $(document).ready(function(){
 		// evento click de mapa
 		$(map).click( Map.Click );
 	});
-
+	//console.log($("#gmap").gmap('get','map'));
 	// tooltips
 	$("#toolbar button").tooltip({placement: "bottom"});
 
@@ -37,9 +37,9 @@ $(document).ready(function(){
 	$("#addDangerZone").click(addDangerZone_Click);
 
 	// eventos modal
-	$("#dialog").on('hidden', function(){
-		$(this).find("input, textarea").val("");
-	});
+	$("#dialog").on('hidden', Dialog.Clear);
+	$("#dialog button[data-dismiss='modal']").click( Dialog.Cancel );
+	$("#dialog button[data-action='save']").click( Dialog.Save );
 
 });
 
@@ -47,14 +47,30 @@ $(document).ready(function(){
 var Map = {
 	//obj: $("#gmap"),
 	state: MAP_MODE_NAV,
-	MarkerBegin: function() {
+	newMarker: null,
+
+	MarkerBegin: function(type) {
 		//console.log($(Map.obj));
+		// crear objeto marcador con valores iniciales
+		Map.newMarker = new google.maps.Marker({
+			id: 1,
+      		type: type,
+      		icon: 'img/' + type + '.png'
+  		});
+  		// visualizar modo de edición
 		$("#gmap").gmap('option', 'draggableCursor', 'crosshair');
 		Map.state = MAP_MODE_EDIT;
 	},
 	MarkerEnd: function(lat, lng) {
+		// cargar coordenadas a marcador nuevo
 		var pos = new google.maps.LatLng(lat, lng);
-		$("#gmap").gmap('addMarker', {'position': pos} );
+		Map.newMarker.position = pos;
+		// crear marcador en mapa
+		//Map.newMarker.map = $("#gmap").gmap('get','map');
+		$("#gmap").gmap('addMarker', Map.newMarker );
+		// cargar modal para ingresar datos
+		Dialog.ShowNew(Map.newMarker.type);
+		// restablecer a modo de navegación
 		$("#gmap").gmap('option', 'draggableCursor', 'url(http://maps.google.com/mapfiles/openhand.cur), move');
 		Map.state = MAP_MODE_NAV;
 	},
@@ -62,7 +78,7 @@ var Map = {
 	DrawMarker: function(obj) {
 		//console.log(obj);
 		var pos = new google.maps.LatLng(obj.pos.lat, obj.pos.lng);
-		var image = 'img/' + obj.type + '.png';
+		var icon = 'img/' + obj.type + '.png';
 		switch(obj.type) {
 			case 'gift':
 				break;
@@ -75,12 +91,9 @@ var Map = {
 			default:
 		}
 		$("#gmap").gmap('addMarker', {
-			//'id': c.id,
-			//'name': c.nomb,
+			'id': obj._id.$id,
 			'position': pos,
-			'icon': image
-			//'radius': parseFloat(cerca.rad),
-			//'editable': false
+			'icon': icon
 		});
 	},
 
@@ -92,37 +105,76 @@ var Map = {
 	}
 };
 
+var Dialog = {
+	ShowNew: function(type) {
+		$('#dialog fieldset').hide();
+		$('#dialog fieldset.all, #dialog fieldset.' + type).show();
+		$('#dialog').modal();
+	},
+
+	Save: function() {
+		var formData = {
+			type: Map.newMarker.type,
+			pos: {lat: Map.newMarker.position.lat(), lng: Map.newMarker.position.lng()},
+			title: $("#titulo").val(),
+			descr: $("#descr").val()
+		};
+		switch (formData.type) {
+			case 'gift':
+				formData.price = $("#precio").val();
+				break;
+			case 'meeting':
+				formData.when = $("#fecha").val();
+				formData.asist = [];
+				$("input[name='asist']").each(function(){
+					if ($(this).val() != "") { formData.asist.push( $(this).val() ); }
+				});
+				break;
+		}
+		$.post('backend/save.php', formData, function(data){
+			console.log(data);
+			if (data.ok) { alert('Marcador Guardado!'); } else { alert('error!!'); }
+		}, 'json');
+		$("#dialog").modal('hide');
+	},
+
+	Cancel: function() {
+		/*$('#gmap').gmap('findMarker', 'id', 1, function(found, marker) {
+			alert(found);
+        	//if (found) marker.setVisible(false);
+		});*/
+		console.log($('#gmap').gmap);
+		var circles = $('#gmap').gmap('get', 'overlays');
+		$(circles).each( function() {
+			console.log( this.get('id') );
+			/*if (this.get('id') == cerca.id) {
+				this.setMap(null);
+			}*/
+		});
+		//Map.newMarker.setMap = null;
+	},
+
+	Clear: function() {
+		$("#dialog").find("input, textarea").val("");
+	}
+};
+
 addLocation_Click = function() {
-	Map.MarkerBegin();
-	$('#dialog fieldset').hide();
-	$('#dialog fieldset.all').show();
-	$('#dialog').modal();
+	Map.MarkerBegin('location');
 };
 
 addPicture_Click = function() {
-	$('#dialog fieldset').hide();
-	$('#dialog fieldset.all, #dialog fieldset.picture').show();
-	$('#dialog').modal();
+	Map.MarkerBegin('picture');
 };
 
 addGift_Click = function() {
-	$('#dialog fieldset').hide();
-	$('#dialog fieldset.all, #dialog fieldset.gift').show();
-	$('#dialog').modal();
+	Map.MarkerBegin('gift');
 };
 
 addMeeting_Click = function() {
-	$('#dialog fieldset').hide();
-	$('#dialog fieldset.all, #dialog fieldset.meeting').show();
-	$('#dialog').modal();
+	Map.MarkerBegin('meeting');
 };
 
 addDangerZone_Click = function() {
-	$('#dialog fieldset').hide();
-	$('#dialog fieldset.all').show();
-	$('#dialog').modal();
-};
-
-map_SetMarkerBegin = function() {
-
+	Map.MarkerBegin('danger-zone');
 };
