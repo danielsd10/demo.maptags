@@ -1,2 +1,10 @@
-{ "name": "Hello World!", "lat": -16.39879, "lng": -71.53724 }
-{ "name": "MongoDB", "lat": -16.41333, "lng": -71.54585 }
+{"type": "location", "regdate": {"$date": 1368838354}, "pos": {"lat": -16.40045, "lng": -71.54186}, "title": "GDG Arequipa", "descr": "Headquarters del GDG"}
+{"type": "location", "regdate": {"$date": 1368838354}, "pos": {"lat": -16.41392, "lng": -71.53661},	"title": "Kunan TI", "descr": "Yo trabajo aqui" }
+{"type": "picture",	"regdate": {"$date": 1368838354}, "pos": {"lat": -16.40968, "lng": -71.54927}, "title": "Vista de la ciudad", "descr": "vista panoramica de la ciudad" }
+{"type": "meeting", "regdate": {"$date": 1368838354}, "pos": {"lat": -16.39057, "lng": -71.53574}, "title": "Google I/O Extended", "descr": "Reunion para organizar el siguiente evento", "asist": ["Gerson", "Jhonatan", "Angel", "Manuel"] }
+{"type": "picture",	"regdate": {"$date": 1368838354}, "pos": {"lat": -16.39879, "lng": -71.53724}, "title": "Plaza de Armas", "descr": "Toma de la Plaza de Armas de Arequipa" }
+{"type": "gift", "regdate": {"$date": 1368838354}, "pos": {"lat": -16.38919, "lng": -71.54720}, "title": "Tablet", "descr": "Nexus 7, 32GB, 2GB RAM, Android Jelly Bean" }
+{"type": "gift", "regdate": {"$date": 1368838354}, "pos": {"lat": -16.40249, "lng": -71.53316}, "title": "Guitarra electrica", "descr": "guitarra electrica con amplificador" }
+{"type": "danger-zone",	"regdate": {"$date" : 1368838354}, "pos": {"lat": -16.41054, "lng": -71.53568, "rad": 40}, "title": "Choros", "descr": "Aqui me robaron la billetera" }
+{"type": "picture", "regdate": {"$date": 1368838354}, "pos": {"lat": -16.38757, "lng": -71.54154}, "title": "Yanahuara", "descr": "Mirador de Yanahuara" }
+{"type": "meeting",	"regdate": {"$date": 1368838354}, "pos": {"lat": -16.41333, "lng": -71.54585}, "title": "Pichanga",	"descr": "pichanga el viernes a las 10pm", "asist": ["Daniel", "Leo"] }

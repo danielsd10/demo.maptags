@@ -12,8 +12,17 @@ $(document).ready(function(){
 	// iniciar mapa
 	$("#gmap").gmap({
 		'center': startLatLng,
-		'zoom': 17
+		'zoom': 15
 	}).bind('init', function(event, map) {
+		// carga de marcas
+		$.post('backend/load.php', null, function(data){
+			console.log(data);
+			for(i=0; i < data.length; i++) {
+				Map.DrawMarker( data[i] );
+			}
+		}, 'json');
+
+		// evento click de mapa
 		$(map).click( Map.Click );
 	});
 
@@ -48,6 +57,31 @@ var Map = {
 		$("#gmap").gmap('addMarker', {'position': pos} );
 		$("#gmap").gmap('option', 'draggableCursor', 'url(http://maps.google.com/mapfiles/openhand.cur), move');
 		Map.state = MAP_MODE_NAV;
+	},
+
+	DrawMarker: function(obj) {
+		//console.log(obj);
+		var pos = new google.maps.LatLng(obj.pos.lat, obj.pos.lng);
+		var image = 'img/' + obj.type + '.png';
+		switch(obj.type) {
+			case 'gift':
+				break;
+			case 'picture':
+				break;
+			case 'meeting':
+				break;
+			case 'danger-zone':
+				break;
+			default:
+		}
+		$("#gmap").gmap('addMarker', {
+			//'id': c.id,
+			//'name': c.nomb,
+			'position': pos,
+			'icon': image
+			//'radius': parseFloat(cerca.rad),
+			//'editable': false
+		});
 	},
 
 	Click: function(e) {
